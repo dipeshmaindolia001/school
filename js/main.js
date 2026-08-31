@@ -1,34 +1,50 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
-  // 1. Mobile Menu Toggle
+  // 1. Mobile Menu Toggle & Full-Screen Drawer
   const menuBtn = document.getElementById("menuBtn");
+  const closeMenuBtn = document.getElementById("closeMenuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
-  if (menuBtn && mobileMenu) {
+
+  const openDrawer = () => {
+    if (mobileMenu) {
+      mobileMenu.classList.add("open");
+      mobileMenu.setAttribute("aria-hidden", "false");
+      if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const closeDrawer = () => {
+    if (mobileMenu) {
+      mobileMenu.classList.remove("open");
+      mobileMenu.setAttribute("aria-hidden", "true");
+      if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (menuBtn) {
     menuBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      mobileMenu.classList.toggle("open");
-      const isOpen = mobileMenu.classList.contains("open");
-      menuBtn.setAttribute("aria-expanded", isOpen);
-      if (isOpen) {
-        document.body.style.overflow = "hidden";
+      if (mobileMenu && mobileMenu.classList.contains("open")) {
+        closeDrawer();
       } else {
-        document.body.style.overflow = "";
+        openDrawer();
       }
     });
+  }
 
-    // Close on link click
+  if (closeMenuBtn) {
+    closeMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeDrawer();
+    });
+  }
+
+  if (mobileMenu) {
     mobileMenu.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
-        mobileMenu.classList.remove("open");
-        document.body.style.overflow = "";
+        closeDrawer();
       });
-    });
-
-    // Close on outside touch/click
-    document.addEventListener("click", (e) => {
-      if (mobileMenu.classList.contains("open") && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-        mobileMenu.classList.remove("open");
-        document.body.style.overflow = "";
-      }
     });
   }
 
@@ -58,14 +74,12 @@
     const likeCount = card.querySelector(".like-count");
 
     if (video) {
-      // Ensure mobile playsinline attributes
       video.setAttribute("playsinline", "");
       video.setAttribute("webkit-playsinline", "");
 
       const togglePlay = (e) => {
         if (e) e.stopPropagation();
         if (video.paused) {
-          // Pause other playing videos to avoid chaos
           document.querySelectorAll(".reel-phone-frame video").forEach(v => {
             if (v !== video) {
               v.pause();
@@ -85,9 +99,7 @@
               centerPlay.style.opacity = "0";
               centerPlay.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
             }
-          }).catch(err => {
-            console.log("Audio/play policy prevented immediate playback", err);
-          });
+          }).catch(err => console.log("Playback prevented", err));
         } else {
           video.pause();
           if (centerPlay) {
@@ -110,7 +122,6 @@
         screen.addEventListener("click", togglePlay);
       }
 
-      // Sound mute/unmute
       if (soundBtn) {
         const toggleSound = (e) => {
           if (e) e.stopPropagation();
@@ -126,7 +137,6 @@
         });
       }
 
-      // Interactive Like counter
       if (likeBtn && likeCount) {
         likeBtn.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -219,7 +229,6 @@
           submitBtn.style.background = "#25D366";
         }
         
-        // Prepare WhatsApp message
         const waMsg = encodeURIComponent(`Hello Chalkframe Team! I want a Free Digital Audit for *${schoolName}* (${city}). Services of interest: ${selectedServices || 'Social Media, Reels & Website'}. Contact: ${phone}`);
         window.open(`https://wa.me/919876543210?text=${waMsg}`, '_blank');
       }, 800);

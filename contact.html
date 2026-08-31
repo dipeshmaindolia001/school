@@ -14,7 +14,7 @@
 <div class="top-bar">
   <span>📍 Built for Schools & Educational Institutions in <strong>Ramnagar · Kashipur · Haldwani · Rudrapur · Kumaon</strong> | Admissions 2026-27 Surge Campaign Live! <a href="contact.html">Get Free School Audit →</a></span>
 </div>
-<header>
+<header id="siteHeader">
   <nav class="wrap">
     <a href="index.html" class="brand">
       <span class="brand-mark">C</span>Chalkframe<span class="brand-tag">Education</span>
@@ -30,20 +30,86 @@
     </div>
     <div class="nav-right">
       <a href="contact.html" class="btn btn-primary btn-sm">Get Free Audit</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-icon"></span>
+      </button>
     </div>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" class="">Home</a>
-    <a href="services.html" class="">Services</a>
-    <a href="portfolio.html" class="">Live Reels &amp; Work</a>
-    <a href="pricing.html" class="">Pricing (₹10k/mo)</a>
-    <a href="how-it-works.html" class="">How It Works</a>
-    <a href="about.html" class="">About</a>
-    <a href="contact.html" class="active">Contact</a>
-    <a href="contact.html" class="btn btn-primary">Get Free Audit</a>
-  </div>
 </header>
+
+<!-- MOBILE NAVIGATION DRAWER (FULL-SCREEN, HIGH-CONTRAST & TOUCH-FRIENDLY) -->
+<div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-drawer-header">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">C</span>Chalkframe<span class="brand-tag">Menu</span>
+    </a>
+    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close navigation menu">
+      ✕ Close
+    </button>
+  </div>
+  <div class="mobile-drawer-content">
+    <div class="mobile-drawer-links">
+      <a href="index.html" class="mobile-nav-link ">
+        <span class="nav-icon">🏠</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">Home</div>
+          <div class="nav-link-sub">Overview, transformation &amp; highlights</div>
+        </div>
+      </a>
+      <a href="services.html" class="mobile-nav-link ">
+        <span class="nav-icon">⚡</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">All Services</div>
+          <div class="nav-link-sub">Social media, reels, graphics &amp; websites</div>
+        </div>
+      </a>
+      <a href="portfolio.html" class="mobile-nav-link ">
+        <span class="nav-icon">🎬</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">Live Reels &amp; Work</div>
+          <div class="nav-link-sub">Playable video reels &amp; poster designs</div>
+        </div>
+      </a>
+      <a href="pricing.html" class="mobile-nav-link ">
+        <span class="nav-icon">💰</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">Pricing Plans</div>
+          <div class="nav-link-sub">₹10k Social Media · ₹15k Website · ₹3k Maint.</div>
+        </div>
+      </a>
+      <a href="how-it-works.html" class="mobile-nav-link ">
+        <span class="nav-icon">🔄</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">How It Works</div>
+          <div class="nav-link-sub">Simple WhatsApp workflow &amp; turnaround SLAs</div>
+        </div>
+      </a>
+      <a href="about.html" class="mobile-nav-link ">
+        <span class="nav-icon">🏫</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">About Chalkframe</div>
+          <div class="nav-link-sub">Our mission for Kumaon &amp; Indian schools</div>
+        </div>
+      </a>
+      <a href="contact.html" class="mobile-nav-link active">
+        <span class="nav-icon">📞</span>
+        <div class="nav-link-text">
+          <div class="nav-link-title">Contact &amp; Free Audit</div>
+          <div class="nav-link-sub">Get your 5-point school digital report</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="mobile-drawer-cta">
+      <a href="contact.html" class="btn btn-primary btn-lg" style="width: 100%; margin-bottom: 10px;">
+        ⚡ Get Free School Audit
+      </a>
+      <a href="https://wa.me/919876543210?text=Hello%20Chalkframe,%20we%20want%20to%20know%20about%20your%20school%20social%20media%20and%20website%20services." class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener" style="width: 100%;">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
 <div class="page-hero">
   <div class="wrap">
     <span class="eyebrow eyebrow-amber">No Obligation · 100% Free</span>

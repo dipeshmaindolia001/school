@@ -1,18 +1,25 @@
-<!DOCTYPE html>
+
+import os
+
+def get_head(title, desc):
+    return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Chalkframe — Remote Digital Agency for Indian Schools</title>
-<meta name="description" content="Learn about Chalkframe's mission to provide world-class social media, reel editing, and website support to schools in Ramnagar, Kashipur, and Haldwani.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>{title}</title>
+<meta name="description" content="{desc}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body>'''
+
+def get_nav(active):
+    return f'''
 <div class="top-bar">
-  <span>📍 Built for Schools & Educational Institutions in <strong>Ramnagar · Kashipur · Haldwani · Rudrapur · Kumaon</strong> | Admissions 2026-27 Surge Campaign Live! <a href="contact.html">Get Free School Audit →</a></span>
+  <span>📍 Built for Schools &amp; Colleges in <strong>Ramnagar · Kashipur · Haldwani · Rudrapur · Kumaon</strong> | Admissions 2026-27 Surge Campaign Live! <a href="contact.html">Get Free School Audit →</a></span>
 </div>
 <header id="siteHeader">
   <nav class="wrap">
@@ -20,13 +27,13 @@
       <span class="brand-mark">C</span>Chalkframe<span class="brand-tag">Education</span>
     </a>
     <div class="nav-links">
-      <a href="index.html" class="">Home</a>
-      <a href="services.html" class="">Services</a>
-      <a href="portfolio.html" class="">Live Reels &amp; Work</a>
-      <a href="pricing.html" class="">Pricing (₹10k/mo)</a>
-      <a href="how-it-works.html" class="">How It Works</a>
-      <a href="about.html" class="active">About</a>
-      <a href="contact.html" class="">Contact</a>
+      <a href="index.html" class="{'active' if active=='home' else ''}">Home</a>
+      <a href="services.html" class="{'active' if active=='services' else ''}">Services</a>
+      <a href="portfolio.html" class="{'active' if active=='portfolio' else ''}">Live Reels &amp; Work</a>
+      <a href="pricing.html" class="{'active' if active=='pricing' else ''}">Pricing (₹10k/mo)</a>
+      <a href="how-it-works.html" class="{'active' if active=='process' else ''}">How It Works</a>
+      <a href="about.html" class="{'active' if active=='about' else ''}">About</a>
+      <a href="contact.html" class="{'active' if active=='contact' else ''}">Contact</a>
     </div>
     <div class="nav-right">
       <a href="contact.html" class="btn btn-primary btn-sm">Get Free Audit</a>
@@ -49,49 +56,49 @@
   </div>
   <div class="mobile-drawer-content">
     <div class="mobile-drawer-links">
-      <a href="index.html" class="mobile-nav-link ">
+      <a href="index.html" class="mobile-nav-link {'active' if active=='home' else ''}">
         <span class="nav-icon">🏠</span>
         <div class="nav-link-text">
           <div class="nav-link-title">Home</div>
           <div class="nav-link-sub">Overview, transformation &amp; highlights</div>
         </div>
       </a>
-      <a href="services.html" class="mobile-nav-link ">
+      <a href="services.html" class="mobile-nav-link {'active' if active=='services' else ''}">
         <span class="nav-icon">⚡</span>
         <div class="nav-link-text">
           <div class="nav-link-title">All Services</div>
           <div class="nav-link-sub">Social media, reels, graphics &amp; websites</div>
         </div>
       </a>
-      <a href="portfolio.html" class="mobile-nav-link ">
+      <a href="portfolio.html" class="mobile-nav-link {'active' if active=='portfolio' else ''}">
         <span class="nav-icon">🎬</span>
         <div class="nav-link-text">
           <div class="nav-link-title">Live Reels &amp; Work</div>
           <div class="nav-link-sub">Playable video reels &amp; poster designs</div>
         </div>
       </a>
-      <a href="pricing.html" class="mobile-nav-link ">
+      <a href="pricing.html" class="mobile-nav-link {'active' if active=='pricing' else ''}">
         <span class="nav-icon">💰</span>
         <div class="nav-link-text">
           <div class="nav-link-title">Pricing Plans</div>
           <div class="nav-link-sub">₹10k Social Media · ₹15k Website · ₹3k Maint.</div>
         </div>
       </a>
-      <a href="how-it-works.html" class="mobile-nav-link ">
+      <a href="how-it-works.html" class="mobile-nav-link {'active' if active=='process' else ''}">
         <span class="nav-icon">🔄</span>
         <div class="nav-link-text">
           <div class="nav-link-title">How It Works</div>
           <div class="nav-link-sub">Simple WhatsApp workflow &amp; turnaround SLAs</div>
         </div>
       </a>
-      <a href="about.html" class="mobile-nav-link active">
+      <a href="about.html" class="mobile-nav-link {'active' if active=='about' else ''}">
         <span class="nav-icon">🏫</span>
         <div class="nav-link-text">
           <div class="nav-link-title">About Chalkframe</div>
           <div class="nav-link-sub">Our mission for Kumaon &amp; Indian schools</div>
         </div>
       </a>
-      <a href="contact.html" class="mobile-nav-link ">
+      <a href="contact.html" class="mobile-nav-link {'active' if active=='contact' else ''}">
         <span class="nav-icon">📞</span>
         <div class="nav-link-text">
           <div class="nav-link-title">Contact &amp; Free Audit</div>
@@ -109,84 +116,10 @@
       </a>
     </div>
   </div>
-</div>
-<div class="page-hero">
-  <div class="wrap">
-    <span class="eyebrow">Our Mission &amp; Vision</span>
-    <h1>Built for Indian Schools That Deserve Metro-Level Digital Branding</h1>
-    <p class="lead">Why should reputed schools in Ramnagar, Kashipur, and Haldwani settle for amateur posters and broken websites? Chalkframe gives you a full-stack digital creative team at a fraction of in-house hiring cost.</p>
-  </div>
-</div>
+</div>'''
 
-<main>
-  <div class="wrap">
-    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; margin-bottom: 64px;">
-      <div>
-        <span class="eyebrow eyebrow-amber">The Chalkframe Story</span>
-        <h2 style="font-size: 30px; margin: 8px 0 16px;">Why We Started in the Kumaon Region</h2>
-        <p style="font-size: 16px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 16px;">
-          Across Uttarakhand — in Haldwani, Kashipur, Ramnagar, Rudrapur, and Nainital — schools are doing extraordinary work. Brilliant science exhibitions, state-level athletic medals, and dedicated faculty.
-        </p>
-        <p style="font-size: 16px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 16px;">
-          Yet their digital presence was often neglected or handled by overburdened computer teachers who had to design posters in between classes.
-        </p>
-        <p style="font-size: 16px; color: var(--ink-soft); line-height: 1.7;">
-          Chalkframe was created to solve this forever. By bringing experienced video editors, graphic artists, and web developers into one unified remote team, we empower schools with polished branding that excites prospective parents.
-        </p>
-      </div>
-
-      <div style="background: var(--paper-warm); border: 1px solid var(--border-soft); border-radius: var(--radius-l); padding: 32px; box-shadow: var(--shadow-card);">
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: var(--pine); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800;">YT</div>
-          <div>
-            <div style="font-weight: 700; font-size: 17px;">Creator-Led Creative Standards</div>
-            <div style="font-size: 13.5px; color: var(--ink-faint);">1,000+ YouTube Subscribers &amp; Video Production Expertise</div>
-          </div>
-        </div>
-        <p style="font-size: 14.5px; color: var(--ink-soft); line-height: 1.6;">
-          Our leadership comes with hands-on video editing, storytelling, and digital content experience. We know the exact rhythm, audio tracks, and visual hooks that keep parents watching.
-        </p>
-      </div>
-    </div>
-
-    <!-- 4 Pillar Principles -->
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 56px;">
-      <div style="background: #fff; border: 1px solid var(--border-soft); border-radius: var(--radius-m); padding: 28px 22px;" class="reveal">
-        <div style="font-size: 24px; margin-bottom: 10px;">🏫</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Education-First Sensitivity</h4>
-        <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.55;">We understand the values, modesty, and respectful tone required for educational institutions in Indian cities.</p>
-      </div>
-
-      <div style="background: #fff; border: 1px solid var(--border-soft); border-radius: var(--radius-m); padding: 28px 22px;" class="reveal">
-        <div style="font-size: 24px; margin-bottom: 10px;">⚡</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Zero Teacher Burden</h4>
-        <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.55;">Teachers are meant to teach, not fiddle with Canva or video apps. Our WhatsApp workflow requires zero effort from your staff.</p>
-      </div>
-
-      <div style="background: #fff; border: 1px solid var(--border-soft); border-radius: var(--radius-m); padding: 28px 22px;" class="reveal">
-        <div style="font-size: 24px; margin-bottom: 10px;">📈</div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Direct Admission Impact</h4>
-        <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.55;">Every reel, topper creative, and website button is crafted to convert parent curiosity into confirmed school admissions.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- AUDIT CTA BANNER -->
-  <section class="bg-warm">
-    <div class="wrap">
-      <div class="cta-banner reveal">
-        <span class="eyebrow eyebrow-white">Let's Partner Up</span>
-        <h2>Make Your School Look as Prestigious Online as It Is Offline</h2>
-        <p class="section-sub">Get in touch today for a free digital audit of your school's current presence.</p>
-        <div class="cta-actions">
-          <a href="contact.html" class="btn btn-white btn-lg">Request Free Digital Audit</a>
-          <a href="https://wa.me/919876543210?text=Hello%20Chalkframe,%20we%20want%20to%20know%20more." class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">Chat on WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
+def get_footer():
+    return '''
 <footer>
   <div class="wrap">
     <div class="footer-grid">
@@ -256,4 +189,4 @@
 
 <script src="js/main.js"></script>
 </body>
-</html>
+</html>'''
