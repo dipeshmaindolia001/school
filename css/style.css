@@ -1253,7 +1253,7 @@ footer {
 
 /* Animations */
 .reveal {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(14px);
   transition: opacity .45s ease, transform .45s ease;
 }
@@ -1264,4 +1264,42 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
+}
+
+
+/* Guarantee Visibility for all Cards & Sections */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.reel-phone-frame {
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+}
+.reel-screen {
+  flex: 1;
+  min-height: 420px;
+}
+
+.btn-instagram-reel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.35);
+  transition: transform 0.15s ease;
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+.btn-instagram-reel:hover, .btn-instagram-reel:active {
+  transform: scale(1.04);
 }

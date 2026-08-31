@@ -1,4 +1,7 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+  // Guarantee immediate visibility
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+
   // 1. Mobile Drawer Navigation
   const menuBtn = document.getElementById("menuBtn");
   const closeMenuBtn = document.getElementById("closeMenuBtn");
@@ -42,13 +45,11 @@
 
   if (mobileMenu) {
     mobileMenu.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        closeDrawer();
-      });
+      link.addEventListener("click", () => closeDrawer());
     });
   }
 
-  // 2. Video Player Logic (Reliable HTML5 Fast Video Playback)
+  // 2. Interactive Video Reel Players
   const reelCards = document.querySelectorAll(".reel-phone-frame");
   reelCards.forEach(card => {
     const video = card.querySelector("video");
@@ -60,13 +61,11 @@
 
     if (video) {
       video.playsInline = true;
-      video.setAttribute("playsinline", "");
-      video.setAttribute("webkit-playsinline", "");
-      video.muted = true; // Start muted to ensure browser play policy compliance
+      video.muted = true;
 
-      const togglePlay = (e) => {
+      const doTogglePlay = (e) => {
         if (e && e.target && e.target.closest("a, button.like-btn, button.reel-sound-icon")) {
-          return; // Let links and sub-buttons work without triggering video play/pause
+          return; // Let links and sub-buttons work
         }
         if (e) {
           e.preventDefault();
@@ -74,45 +73,37 @@
         }
 
         if (video.paused) {
-          // Pause all other videos
+          // Pause other reels
           document.querySelectorAll(".reel-phone-frame video").forEach(v => {
             if (v !== video) {
               v.pause();
               const pCard = v.closest(".reel-phone-frame");
               if (pCard) {
                 const btn = pCard.querySelector(".reel-center-play");
-                if (btn) btn.style.opacity = "1";
+                if (btn) btn.style.display = "flex";
               }
             }
           });
 
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              if (centerPlay) centerPlay.style.opacity = "0";
-            }).catch(err => {
-              console.warn("Video playback error or policy:", err);
-              // Fallback: Ensure muted and try again
-              video.muted = true;
-              video.play().then(() => {
-                if (centerPlay) centerPlay.style.opacity = "0";
-              }).catch(e => console.log("Final fallback prevented", e));
+          video.play().then(() => {
+            if (centerPlay) centerPlay.style.display = "none";
+          }).catch(err => {
+            console.log("Muted autoplay fallback:", err);
+            video.muted = true;
+            video.play().then(() => {
+              if (centerPlay) centerPlay.style.display = "none";
             });
-          }
+          });
         } else {
           video.pause();
-          if (centerPlay) centerPlay.style.opacity = "1";
+          if (centerPlay) centerPlay.style.display = "flex";
         }
       };
 
-      if (screen) {
-        screen.addEventListener("click", togglePlay);
-      }
-      if (centerPlay) {
-        centerPlay.addEventListener("click", togglePlay);
-      }
+      if (screen) screen.addEventListener("click", doTogglePlay);
+      if (centerPlay) centerPlay.addEventListener("click", doTogglePlay);
 
-      // Sound toggle
+      // Sound button
       if (soundBtn) {
         soundBtn.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -123,7 +114,7 @@
         });
       }
 
-      // Like interaction
+      // Like button
       if (likeBtn && likeCount) {
         likeBtn.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -183,12 +174,7 @@
     }
   });
 
-  // 5. Service Pills & Form Submissions
-  const servicePills = document.querySelectorAll(".service-pill");
-  servicePills.forEach(pill => {
-    pill.addEventListener("click", () => pill.classList.toggle("active"));
-  });
-
+  // 5. Form Submissions
   const auditForms = document.querySelectorAll("form.audit-form");
   auditForms.forEach(form => {
     form.addEventListener("submit", (e) => {
