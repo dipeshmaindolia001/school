@@ -3,11 +3,32 @@
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       mobileMenu.classList.toggle("open");
+      const isOpen = mobileMenu.classList.contains("open");
+      menuBtn.setAttribute("aria-expanded", isOpen);
+      if (isOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
     });
+
+    // Close on link click
     mobileMenu.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => mobileMenu.classList.remove("open"));
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      });
+    });
+
+    // Close on outside touch/click
+    document.addEventListener("click", (e) => {
+      if (mobileMenu.classList.contains("open") && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      }
     });
   }
 
@@ -21,13 +42,13 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+    }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
     revealElements.forEach(el => observer.observe(el));
   } else {
     revealElements.forEach(el => el.classList.add("in"));
   }
 
-  // 3. Reels & Video Player Controls
+  // 3. Mobile & Desktop Reels & Video Player Controls
   const reelCards = document.querySelectorAll(".reel-phone-frame");
   reelCards.forEach(card => {
     const video = card.querySelector("video");
@@ -37,46 +58,71 @@
     const likeCount = card.querySelector(".like-count");
 
     if (video) {
-      // Toggle play on center play button or video click
+      // Ensure mobile playsinline attributes
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+
       const togglePlay = (e) => {
-        e.stopPropagation();
+        if (e) e.stopPropagation();
         if (video.paused) {
           // Pause other playing videos to avoid chaos
           document.querySelectorAll(".reel-phone-frame video").forEach(v => {
-            if (v !== video) v.pause();
-          });
-          document.querySelectorAll(".reel-center-play").forEach(btn => {
-            btn.style.opacity = "1";
-            btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>`;
+            if (v !== video) {
+              v.pause();
+              const pCard = v.closest(".reel-phone-frame");
+              if (pCard) {
+                const btn = pCard.querySelector(".reel-center-play");
+                if (btn) {
+                  btn.style.opacity = "1";
+                  btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>`;
+                }
+              }
+            }
           });
 
           video.play().then(() => {
             if (centerPlay) {
               centerPlay.style.opacity = "0";
-              centerPlay.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+              centerPlay.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
             }
-          }).catch(err => console.log("Autoplay policy prevented audio play", err));
+          }).catch(err => {
+            console.log("Audio/play policy prevented immediate playback", err);
+          });
         } else {
           video.pause();
           if (centerPlay) {
             centerPlay.style.opacity = "1";
-            centerPlay.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>`;
+            centerPlay.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>`;
           }
         }
       };
 
-      if (centerPlay) centerPlay.addEventListener("click", togglePlay);
+      if (centerPlay) {
+        centerPlay.addEventListener("click", togglePlay);
+        centerPlay.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          togglePlay(e);
+        });
+      }
+
       const screen = card.querySelector(".reel-screen");
-      if (screen) screen.addEventListener("click", togglePlay);
+      if (screen) {
+        screen.addEventListener("click", togglePlay);
+      }
 
       // Sound mute/unmute
       if (soundBtn) {
-        soundBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
+        const toggleSound = (e) => {
+          if (e) e.stopPropagation();
           video.muted = !video.muted;
           soundBtn.innerHTML = video.muted
             ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`
             : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+        };
+        soundBtn.addEventListener("click", toggleSound);
+        soundBtn.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          toggleSound(e);
         });
       }
 
@@ -126,7 +172,6 @@
     if (questionBtn && answer) {
       questionBtn.addEventListener("click", () => {
         const isOpen = item.classList.contains("open");
-        // Close other items
         faqItems.forEach(other => {
           other.classList.remove("open");
           const otherAns = other.querySelector(".faq-a");
@@ -170,14 +215,14 @@
 
       setTimeout(() => {
         if (submitBtn) {
-          submitBtn.innerHTML = "Audit Request Sent! Redirecting to WhatsApp...";
+          submitBtn.innerHTML = "Audit Request Sent! Opening WhatsApp...";
           submitBtn.style.background = "#25D366";
         }
         
         // Prepare WhatsApp message
         const waMsg = encodeURIComponent(`Hello Chalkframe Team! I want a Free Digital Audit for *${schoolName}* (${city}). Services of interest: ${selectedServices || 'Social Media, Reels & Website'}. Contact: ${phone}`);
         window.open(`https://wa.me/919876543210?text=${waMsg}`, '_blank');
-      }, 1000);
+      }, 800);
     });
   });
 });
