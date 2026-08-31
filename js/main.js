@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   // 1. Mobile Menu Toggle & Full-Screen Drawer
   const menuBtn = document.getElementById("menuBtn");
   const closeMenuBtn = document.getElementById("closeMenuBtn");
@@ -230,7 +230,7 @@
         }
         
         const waMsg = encodeURIComponent(`Hello Chalkframe Team! I want a Free Digital Audit for *${schoolName}* (${city}). Services of interest: ${selectedServices || 'Social Media, Reels & Website'}. Contact: ${phone}`);
-        window.open(`https://wa.me/919876543210?text=${waMsg}`, '_blank');
+        window.open(`https://wa.me/917017982390?text=${waMsg}`, '_blank');
       }, 800);
     });
   });
