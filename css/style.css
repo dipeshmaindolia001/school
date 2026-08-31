@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --ink: #1B1B18;
   --ink-soft: #55534A;
   --ink-faint: #858377;
@@ -654,7 +654,9 @@ nav.wrap {
 .reels-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 @media (max-width: 1024px) {
   .reels-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -1283,39 +1285,31 @@ footer {
 }
 
 
-/* Guarantee Visibility for all Cards & Sections */
+/* Guarantee Visibility */
 .reveal {
   opacity: 1 !important;
   transform: none !important;
 }
 
-.reel-phone-frame {
-  
-  display: flex;
-  flex-direction: column;
-}
-.reel-screen {
-  flex: 1;
-  
-}
-
-.btn-instagram-reel {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: #ffffff !important;
-  font-weight: 700;
-  font-size: 11.5px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.35);
-  transition: transform 0.15s ease;
-  pointer-events: auto !important;
-  cursor: pointer;
-}
-.btn-instagram-reel:hover, .btn-instagram-reel:active {
-  transform: scale(1.04);
+/* ---------- MOBILE POLISH ---------- */
+@media (max-width: 480px) {
+  .reels-grid { gap: 6px; }
+  .reel-phone-frame { border-radius: 10px; padding: 3px; border-width: 1px; }
+  .reel-screen { border-radius: 8px; }
+  .reel-overlay { padding: 5px; }
+  .reel-school-tag { font-size: 8px; padding: 1px 5px; }
+  .school-avatar { width: 12px; height: 12px; font-size: 7px; }
+  .reel-sound-icon { width: 18px; height: 18px; }
+  .reel-sound-icon svg { width: 10px; height: 10px; }
+  .reel-center-play { width: 28px; height: 28px; }
+  .reel-center-play svg { width: 14px; height: 14px; }
+  .reel-caption-side .school-name { font-size: 9px; }
+  .reel-caption-side .reel-desc { font-size: 8px; -webkit-line-clamp: 1; }
+  .reel-action-btn svg { width: 12px; height: 12px; }
+  .reel-action-btn { font-size: 7.5px; }
+  .reel-action-bar { gap: 4px; }
+  .page-hero h1 { font-size: 22px; }
+  .page-hero p.lead { font-size: 13px; }
+  .filter-bar { gap: 6px; }
+  .filter-btn { font-size: 11px; padding: 5px 10px; }
 }
